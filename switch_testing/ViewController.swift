@@ -66,31 +66,31 @@ class ViewController: UIViewController {
         circleLbl.text = "\(scalarCircle)"
         
         circleLbl.font = UIFont(name: "Arial", size: 75)
-        circleLbl.textColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
-//        circleLbl.backgroundColor = UIColor.redColor()
-        
+        circleLbl.textColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
         
         let codeCheck = 0x2713
         let scalarCheck = UnicodeScalar(codeCheck)
         checkLbl.text = "\(scalarCheck)"
-        //checkLbl.hidden = true
+        checkLbl.hidden = true
+        checkLbl.textAlignment = .Center
         
-        let checkLblSize = circleLbl.font.pointSize / 1.5
+        let checkLblSize = circleLbl.font.pointSize / 1.75
         checkLbl.font = UIFont(name: "Arial", size: checkLblSize)
         checkLbl.textColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
-//        checkLbl.backgroundColor = UIColor.blueColor()
-        
+
+        //tap settings
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.checkToggle(_:)))
         tapGesture.numberOfTapsRequired = 1
         customView3.userInteractionEnabled = true
         customView3.addGestureRecognizer(tapGesture)
         
+        let textLbl3 = UILabel()
+        textLbl3.text = "Force Containers on Delivery"
+        textLbl3.textColor = UIColor.lightGrayColor()
+        textLbl3.font = UIFont(name: "Arial", size: 16)
         
+       
         
-        //UIApplicationShortcutIcon.init(type: .Confirmation)
-        
-        
-//        customView3.backgroundColor = UIColor.blueColor()   
         
         //Grouping #1
         self.view.addSubview(customView)
@@ -119,13 +119,16 @@ class ViewController: UIViewController {
         self.view.addSubview(customView3)
         customView3.translatesAutoresizingMaskIntoConstraints = false
         
+        customView3.addSubview(textLbl3)
+        textLbl3.translatesAutoresizingMaskIntoConstraints = false
+        
         customView3.addSubview(checkLbl)
         checkLbl.translatesAutoresizingMaskIntoConstraints = false
         
         customView3.addSubview(circleLbl)
         circleLbl.translatesAutoresizingMaskIntoConstraints = false
 
-        
+//        customView3.backgroundColor = UIColor.blueColor()
         
         
         //CONSTRAINTS
@@ -185,16 +188,19 @@ class ViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activateConstraints([
+            textLbl3.bottomAnchor.constraintEqualToAnchor(customView3.bottomAnchor, constant: 10),
+            textLbl3.leadingAnchor.constraintEqualToAnchor(customView3.leadingAnchor, constant: 10)
+            ])
+        
+        NSLayoutConstraint.activateConstraints([
             checkLbl.topAnchor.constraintEqualToAnchor(customView3.topAnchor),
-            checkLbl.leadingAnchor.constraintEqualToAnchor(customView3.leadingAnchor),
-            checkLbl.trailingAnchor.constraintEqualToAnchor(customView3.trailingAnchor),
+            checkLbl.trailingAnchor.constraintEqualToAnchor(customView3.trailingAnchor, constant: -10),
             checkLbl.heightAnchor.constraintEqualToConstant(100)
             ])
         
         NSLayoutConstraint.activateConstraints([
             circleLbl.topAnchor.constraintEqualToAnchor(customView3.topAnchor),
-            circleLbl.leadingAnchor.constraintEqualToAnchor(customView3.leadingAnchor),
-            circleLbl.trailingAnchor.constraintEqualToAnchor(customView3.trailingAnchor),
+            circleLbl.trailingAnchor.constraintEqualToAnchor(customView3.trailingAnchor, constant: -10),
             circleLbl.heightAnchor.constraintEqualToConstant(100)
             ])
         
@@ -215,8 +221,10 @@ class ViewController: UIViewController {
     func checkToggle(sender: UILabel!) {
         if checkLbl.hidden != true {
             checkLbl.hidden = true
+            circleLbl.textColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
         } else {
             checkLbl.hidden = false
+            circleLbl.textColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
         }
     }
     
@@ -231,6 +239,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
 }
+
+//UIApplicationShortcutIcon.init(type: .Confirmation) //these are not accessible--only through quick actions
 

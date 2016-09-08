@@ -9,7 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    let counterLbl: UILabel
+    
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,13 +39,20 @@ class ViewController: UIViewController {
         textLabel2.text = "Unit of Measure Qty"
         textLabel2.textColor = UIColor.blueColor()
         textLabel2.font = UIFont(name: "Arial", size: 16)
+        textLabel2.sizeToFit()
 
-        counterLbl.text = "0"
+        counterLbl.text = String(Int(stepperControl.value))
         counterLbl.textColor = UIColor.blueColor()
-        counterLbl.font = UIFont(name: "Arial", size: 16)
+        counterLbl.font = UIFont(name: "Arial", size: 18)
         counterLbl.textAlignment = .Center
         
-
+        stepperControl.wraps = false
+        stepperControl.autorepeat = true
+        stepperControl.maximumValue = 10
+        stepperControl.minimumValue = -10
+        stepperControl.addTarget(self, action: #selector(ViewController.incrementQty(_:)), forControlEvents: .ValueChanged)
+        
+       
         
 //        customView.backgroundColor = UIColor.purpleColor()
 //        customView2.backgroundColor = UIColor.redColor()
@@ -63,9 +80,7 @@ class ViewController: UIViewController {
         customView2.addSubview(stepperControl)
         stepperControl.translatesAutoresizingMaskIntoConstraints = false
 
-        
-        
-        
+
         //Grouping #1
         NSLayoutConstraint.activateConstraints([
             customView.topAnchor.constraintEqualToAnchor(self.topLayoutGuide.bottomAnchor),
@@ -104,15 +119,20 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activateConstraints([
             counterLbl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor, constant: -5),
             counterLbl.trailingAnchor.constraintEqualToAnchor(stepperControl.leadingAnchor),
-            counterLbl.leadingAnchor.constraintEqualToAnchor(textLabel2.trailingAnchor)
+            counterLbl.leadingAnchor.constraintEqualToAnchor(textLabel2.trailingAnchor),
+            counterLbl.widthAnchor.constraintEqualToConstant(75)
             ])
         
         NSLayoutConstraint.activateConstraints([
             stepperControl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor),
             stepperControl.trailingAnchor.constraintEqualToAnchor(customView2.trailingAnchor)
             ])
-        
-        
+
+    }
+    
+    func incrementQty(sender: UIStepper!) {
+        self.counterLbl.text = String(Int(sender.value.description))
+        print("Stepper is now \(Int(sender.value))")
     }
 
     override func didReceiveMemoryWarning() {

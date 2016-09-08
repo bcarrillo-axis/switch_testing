@@ -41,16 +41,21 @@ class ViewController: UIViewController {
         textLabel2.sizeToFit()
 
         counterLbl.text = String(Int(stepperControl.value))
-        counterLbl.textColor = UIColor.lightGrayColor()
+        counterLbl.textColor = UIColor.whiteColor()
         counterLbl.font = UIFont(name: "Arial", size: 18)
         counterLbl.textAlignment = .Center
+        counterLbl.backgroundColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
         
         stepperControl.wraps = false
         stepperControl.autorepeat = true
         stepperControl.maximumValue = 10
         stepperControl.minimumValue = -10
-        stepperControl.tintColor = UIColor.lightGrayColor()
+        stepperControl.tintColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
         stepperControl.addTarget(self, action: #selector(ViewController.incrementQty(_:)), forControlEvents: .ValueChanged)
+        
+        switchControl.tintColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)//alt lighter mint theme (when hovering on web)
+//        switchControl.onTintColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
+        switchControl.onTintColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0) //regular mint theme
         
        
         
@@ -111,16 +116,17 @@ class ViewController: UIViewController {
             ])
         
         NSLayoutConstraint.activateConstraints([
-            textLabel2.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor, constant: -5),
+            textLabel2.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor, constant: -3),
             textLabel2.leadingAnchor.constraintEqualToAnchor(customView2.leadingAnchor, constant: 10),
             textLabel2.trailingAnchor.constraintEqualToAnchor(counterLbl.leadingAnchor)
             ])
         
         NSLayoutConstraint.activateConstraints([
-            counterLbl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor, constant: -5),
-            counterLbl.trailingAnchor.constraintEqualToAnchor(stepperControl.leadingAnchor),
-            counterLbl.leadingAnchor.constraintEqualToAnchor(textLabel2.trailingAnchor),
-            counterLbl.widthAnchor.constraintEqualToConstant(75)
+            counterLbl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor),
+            counterLbl.trailingAnchor.constraintEqualToAnchor(stepperControl.leadingAnchor, constant: -15),
+//            counterLbl.leadingAnchor.constraintEqualToAnchor(textLabel2.trailingAnchor),
+            counterLbl.heightAnchor.constraintEqualToAnchor(stepperControl.heightAnchor),
+            counterLbl.widthAnchor.constraintEqualToAnchor(counterLbl.heightAnchor)
             ])
         
         NSLayoutConstraint.activateConstraints([
@@ -131,8 +137,20 @@ class ViewController: UIViewController {
     }
     
     func incrementQty(sender: UIStepper!) {
-        self.counterLbl.text = String(Int(sender.value))
+        if Int(sender.value) == 0 {
+            counterLbl.backgroundColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
+        } else {
+            counterLbl.backgroundColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
+        }
+        
+        counterLbl.text = String(Int(sender.value))
         print("Stepper is now \(Int(sender.value))")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        counterLbl.layer.cornerRadius = counterLbl.bounds.width / 2
+        counterLbl.clipsToBounds = true
+        print(counterLbl.bounds.width)
     }
 
     override func didReceiveMemoryWarning() {

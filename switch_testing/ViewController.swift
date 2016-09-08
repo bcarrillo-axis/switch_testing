@@ -32,16 +32,16 @@ class ViewController: UIViewController {
         let stepperControl = UIStepper()
         
         textLabel.text = "Force Containers on Delivery"
-        textLabel.textColor = UIColor.blueColor()
+        textLabel.textColor = UIColor.lightGrayColor()
         textLabel.font = UIFont(name: "Arial", size: 16)
         
         textLabel2.text = "Unit of Measure Qty"
-        textLabel2.textColor = UIColor.blueColor()
+        textLabel2.textColor = UIColor.lightGrayColor()
         textLabel2.font = UIFont(name: "Arial", size: 16)
         textLabel2.sizeToFit()
 
         counterLbl.text = String(Int(stepperControl.value))
-        counterLbl.textColor = UIColor.blueColor()
+        counterLbl.textColor = UIColor.lightGrayColor()
         counterLbl.font = UIFont(name: "Arial", size: 18)
         counterLbl.textAlignment = .Center
         
@@ -49,6 +49,7 @@ class ViewController: UIViewController {
         stepperControl.autorepeat = true
         stepperControl.maximumValue = 10
         stepperControl.minimumValue = -10
+        stepperControl.tintColor = UIColor.lightGrayColor()
         stepperControl.addTarget(self, action: #selector(ViewController.incrementQty(_:)), forControlEvents: .ValueChanged)
         
        
@@ -124,7 +125,7 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activateConstraints([
             stepperControl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor),
-            stepperControl.trailingAnchor.constraintEqualToAnchor(customView2.trailingAnchor)
+            stepperControl.trailingAnchor.constraintEqualToAnchor(customView2.trailingAnchor, constant: -10)
             ])
 
     }

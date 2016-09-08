@@ -54,13 +54,7 @@ class ViewController: UIViewController {
         stepperControl.addTarget(self, action: #selector(ViewController.incrementQty(_:)), forControlEvents: .ValueChanged)
         
         switchControl.tintColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)//alt lighter mint theme (when hovering on web)
-//        switchControl.onTintColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
         switchControl.onTintColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0) //regular mint theme
-        
-       
-        
-//        customView.backgroundColor = UIColor.purpleColor()
-//        customView2.backgroundColor = UIColor.redColor()
         
         
         self.view.addSubview(customView)
@@ -124,7 +118,6 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activateConstraints([
             counterLbl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor),
             counterLbl.trailingAnchor.constraintEqualToAnchor(stepperControl.leadingAnchor, constant: -15),
-//            counterLbl.leadingAnchor.constraintEqualToAnchor(textLabel2.trailingAnchor),
             counterLbl.heightAnchor.constraintEqualToAnchor(stepperControl.heightAnchor),
             counterLbl.widthAnchor.constraintEqualToAnchor(counterLbl.heightAnchor)
             ])
@@ -138,7 +131,7 @@ class ViewController: UIViewController {
     
     func incrementQty(sender: UIStepper!) {
         if Int(sender.value) == 0 {
-            counterLbl.backgroundColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)
+            counterLbl.backgroundColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0) // "default" inactive look when 0
         } else {
             counterLbl.backgroundColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
         }

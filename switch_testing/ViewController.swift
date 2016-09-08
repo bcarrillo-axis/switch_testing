@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let counterLbl: UILabel
+    let counterLbl = UILabel()
     
     
     init() {
@@ -29,7 +29,6 @@ class ViewController: UIViewController {
         
         let customView2 = UIView()
         let textLabel2 = UILabel()
-        let counterLbl = UILabel()
         let stepperControl = UIStepper()
         
         textLabel.text = "Force Containers on Delivery"
@@ -131,7 +130,7 @@ class ViewController: UIViewController {
     }
     
     func incrementQty(sender: UIStepper!) {
-        self.counterLbl.text = String(Int(sender.value.description))
+        self.counterLbl.text = String(Int(sender.value))
         print("Stepper is now \(Int(sender.value))")
     }
 

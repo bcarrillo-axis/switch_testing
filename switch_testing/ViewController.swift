@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
     let counterLbl = UILabel()
+    let checkLbl = UILabel()
+    let circleLbl = UILabel()
+    var tapGesture = UITapGestureRecognizer()
     
     
     init() {
@@ -31,6 +34,8 @@ class ViewController: UIViewController {
         let textLabel2 = UILabel()
         let stepperControl = UIStepper()
         
+        let customView3 = UIView()
+        
         textLabel.text = "Force Containers on Delivery"
         textLabel.textColor = UIColor.lightGrayColor()
         textLabel.font = UIFont(name: "Arial", size: 16)
@@ -38,7 +43,7 @@ class ViewController: UIViewController {
         textLabel2.text = "Unit of Measure Qty"
         textLabel2.textColor = UIColor.lightGrayColor()
         textLabel2.font = UIFont(name: "Arial", size: 16)
-        textLabel2.sizeToFit()
+
 
         counterLbl.text = String(Int(stepperControl.value))
         counterLbl.textColor = UIColor.whiteColor()
@@ -56,7 +61,38 @@ class ViewController: UIViewController {
         switchControl.tintColor = UIColor(red: 127/255, green: 229/255, blue: 206/255, alpha: 1.0)//alt lighter mint theme (when hovering on web)
         switchControl.onTintColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0) //regular mint theme
         
+        let codeCircle = 0x25CB
+        let scalarCircle = UnicodeScalar(codeCircle)
+        circleLbl.text = "\(scalarCircle)"
         
+        circleLbl.font = UIFont(name: "Arial", size: 75)
+        circleLbl.textColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
+//        circleLbl.backgroundColor = UIColor.redColor()
+        
+        
+        let codeCheck = 0x2713
+        let scalarCheck = UnicodeScalar(codeCheck)
+        checkLbl.text = "\(scalarCheck)"
+        //checkLbl.hidden = true
+        
+        let checkLblSize = circleLbl.font.pointSize / 1.5
+        checkLbl.font = UIFont(name: "Arial", size: checkLblSize)
+        checkLbl.textColor = UIColor(red: 31/255, green: 209/255, blue: 169/255, alpha: 1.0)
+//        checkLbl.backgroundColor = UIColor.blueColor()
+        
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.checkToggle(_:)))
+        tapGesture.numberOfTapsRequired = 1
+        customView3.userInteractionEnabled = true
+        customView3.addGestureRecognizer(tapGesture)
+        
+        
+        
+        //UIApplicationShortcutIcon.init(type: .Confirmation)
+        
+        
+//        customView3.backgroundColor = UIColor.blueColor()   
+        
+        //Grouping #1
         self.view.addSubview(customView)
         customView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -66,7 +102,7 @@ class ViewController: UIViewController {
         customView.addSubview(switchControl)
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         
-        
+        //Grouping #2
         self.view.addSubview(customView2)
         customView2.translatesAutoresizingMaskIntoConstraints = false
         
@@ -78,8 +114,21 @@ class ViewController: UIViewController {
         
         customView2.addSubview(stepperControl)
         stepperControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        //Grouping #3
+        self.view.addSubview(customView3)
+        customView3.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView3.addSubview(checkLbl)
+        checkLbl.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView3.addSubview(circleLbl)
+        circleLbl.translatesAutoresizingMaskIntoConstraints = false
 
-
+        
+        
+        
+        //CONSTRAINTS
         //Grouping #1
         NSLayoutConstraint.activateConstraints([
             customView.topAnchor.constraintEqualToAnchor(self.topLayoutGuide.bottomAnchor),
@@ -126,6 +175,29 @@ class ViewController: UIViewController {
             stepperControl.bottomAnchor.constraintEqualToAnchor(customView2.bottomAnchor),
             stepperControl.trailingAnchor.constraintEqualToAnchor(customView2.trailingAnchor, constant: -10)
             ])
+        
+        //Grouping #3
+        NSLayoutConstraint.activateConstraints([
+            customView3.topAnchor.constraintEqualToAnchor(customView2.bottomAnchor),
+            customView3.leadingAnchor.constraintEqualToAnchor(self.view.leadingAnchor),
+            customView3.trailingAnchor.constraintEqualToAnchor(self.view.trailingAnchor),
+            customView3.heightAnchor.constraintEqualToConstant(60)
+            ])
+        
+        NSLayoutConstraint.activateConstraints([
+            checkLbl.topAnchor.constraintEqualToAnchor(customView3.topAnchor),
+            checkLbl.leadingAnchor.constraintEqualToAnchor(customView3.leadingAnchor),
+            checkLbl.trailingAnchor.constraintEqualToAnchor(customView3.trailingAnchor),
+            checkLbl.heightAnchor.constraintEqualToConstant(100)
+            ])
+        
+        NSLayoutConstraint.activateConstraints([
+            circleLbl.topAnchor.constraintEqualToAnchor(customView3.topAnchor),
+            circleLbl.leadingAnchor.constraintEqualToAnchor(customView3.leadingAnchor),
+            circleLbl.trailingAnchor.constraintEqualToAnchor(customView3.trailingAnchor),
+            circleLbl.heightAnchor.constraintEqualToConstant(100)
+            ])
+        
 
     }
     
@@ -138,6 +210,14 @@ class ViewController: UIViewController {
         
         counterLbl.text = String(Int(sender.value))
         print("Stepper is now \(Int(sender.value))")
+    }
+    
+    func checkToggle(sender: UILabel!) {
+        if checkLbl.hidden != true {
+            checkLbl.hidden = true
+        } else {
+            checkLbl.hidden = false
+        }
     }
     
     override func viewDidLayoutSubviews() {
